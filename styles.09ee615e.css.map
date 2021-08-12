@@ -1,1 +1,0 @@
-{"version":3,"sources":["styles.css"],"names":[],"mappings":"AAAA,KACE,uBACF,CAEA,YACE,cAAe,CACf,eACF","file":"styles.09ee615e.css","sourceRoot":"../src","sourcesContent":["body {\n  background-color: bisque;\n}\n\n.page-title {\n  font-size: 30px;\n  font-weight: bold;\n}\n"]}
