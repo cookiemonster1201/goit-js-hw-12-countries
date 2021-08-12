@@ -1,14 +1,16 @@
-<article class='country'>
-  <div class='country__info'>
-    <h2 class='country__name'>{{name}}</h2>
-    <P class='country__capital'>Capital:{{capital}}</P>
-    <P class='country__population'>Population:{{population}}</P>
-    <p class='country__languages'>Languages:</p>
-    <ul class='country__lang-list'>
-      {{#each languages}}
-        <li class='country__lang-item'>{{this}}</li>
-      {{/each}}
-    </ul>
-  </div>
-  <img class='country__flag' src='{{flag}}' alt='{{name}}' />
-</article>
+{{#each this}}
+  <article class='country'>
+    <div class='country__info'>
+      <h2 class='country__name'>{{name}}</h2>
+      <P class='country__capital'>Capital:{{capital}}</P>
+      <P class='country__population'>Population:{{population}}</P>
+      <p class='country__languages'>Languages:</p>
+      <ul class='country__lang-list'>
+        {{#each languages}}
+          <li class='country__lang-item'>{{name}}</li>
+        {{/each}}
+      </ul>
+    </div>
+    <img class='country__flag' width='300' src='{{flag}}' alt='{{name}}' />
+  </article>
+{{/each}}

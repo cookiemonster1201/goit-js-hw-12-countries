@@ -1,8 +1,18 @@
 body {
-  background-color: bisque;
+  background-color: rgb(171, 226, 183);
 }
 
 .page-title {
-  font-size: 30px;
+  font-size: 40px;
   font-weight: bold;
+  color: rgb(55, 46, 109);
+}
+
+.country {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.country__info {
+  min-width: 300px;
 }
