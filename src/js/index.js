@@ -1,40 +1,61 @@
 import '../styles.css';
 
-import '@pnotify/core/dist/PNotify.css';
-import '@pnotify/core/dist/Material.css';
 import { notice } from '@pnotify/core';
-import { defaults } from '@pnotify/core';
+import '@pnotify/core/dist/PNotify.css';
+import '@pnotify/core/dist/BrightTheme.css';
+import * as Confirm from '@pnotify/confirm';
+import '@pnotify/confirm/dist/PNotifyConfirm.css';
+
 import debounce from 'lodash.debounce';
 
-import fetchCountries from './fetchCountries';
+import CountriesApiService from './country-search-service';
 import refs from './getRefs';
 
 import countryCardTpl from '../templates/country-card.hbs';
 import countriesListTpl from '../templates/countries-list.hbs';
 
+const countriesApiService = new CountriesApiService();
+let noticeIsActive = false;
+
 refs.input.addEventListener('input', debounce(onCountryInput, 500));
 
 function onCountryInput(e) {
-  let query = e.target.value;
+  countriesApiService.searchQuery = e.target.value;
 
-  if (query.length === 0) {
+  if (countriesApiService.searchQuery.length === 0) {
+    console.log('ffffff');
     clearMarkup();
     return;
   }
 
-  fetchCountries(query)
+  countriesApiService
+    .fetchCountries()
     .then(data => {
-      console.log(data);
+      if (data.status === 404) {
+        throw new Error();
+      }
+
+      if (data.length > 10) {
+        if (noticeIsActive) {
+          return;
+        }
+        onTooManyMatchesFound();
+        return;
+      }
+
       if (data.length > 1 && data.length < 11) {
         renderMarkup(countriesListTpl(data));
-      } else if (data.length === 1) {
+        return;
+      }
+
+      if (data.length === 1) {
         renderMarkup(countryCardTpl(data));
-      } else if (data.length > 10) {
-        onQueryResultsExceeded();
+        return;
       }
     })
     .catch(error => {
       onError();
+      e.target.value = '';
     });
 }
 
@@ -47,15 +68,40 @@ function clearMarkup() {
 }
 
 function onError() {
-  console.log('gg');
   alert('Что-то пошло не так(');
   clearMarkup();
 }
 
-function onQueryResultsExceeded() {
+function onTooManyMatchesFound() {
+  noticeIsActive = true;
+
+  setTimeout(() => {
+    noticeIsActive = false;
+  }, 2300);
+
   notice({
+    type: 'notice',
     text: 'Too many matches found. Please enter a more specific query!',
-    styling: 'material',
-    delay: 3000,
+    styling: 'brighttheme',
+    mode: 'dark',
+    modules: new Map([
+      [
+        Confirm,
+        {
+          confirm: true,
+          buttons: [
+            {
+              text: 'Got it',
+              primary: true,
+              click: notice => {
+                notice.close();
+              },
+            },
+          ],
+        },
+      ],
+    ]),
+    autoOpen: 'false',
+    delay: 2000,
   });
 }
