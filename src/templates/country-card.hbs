@@ -3,8 +3,10 @@
     <h2 class='country__name'>{{name}}</h2>
     <div class='country__container'>
       <div class='country__info'>
-        <P class='country__capital'>Capital: {{capital}}</P>
-        <P class='country__population'>Population: {{population}}</P>
+        <P class='country__capital'>Capital:
+          <span class='country__capital--text-content'>{{capital}}</span></P>
+        <P class='country__population'>Population:
+          <span class='population--text-content'>{{population}}</span></P>
         <p class='country__languages'>Languages: </p>
         <ul class='country__lang-list'>
           {{#each languages}}

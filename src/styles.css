@@ -63,6 +63,14 @@ body {
 .countries__item:not(:last-child) {
   margin-bottom: 10px;
 }
+
+.country__capital--text-content,
+.population--text-content {
+  font-weight: normal;
+  font-size: 22px;
+  color: rgb(114, 0, 0);
+}
+
 .country__lang-list,
 .countries__list {
   list-style: none;
