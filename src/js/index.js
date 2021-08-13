@@ -9,7 +9,7 @@ import '@pnotify/confirm/dist/PNotifyConfirm.css';
 import debounce from 'lodash.debounce';
 
 import CountriesApiService from './country-search-service';
-import refs from './getRefs';
+import refs from './get-refs';
 
 import countryCardTpl from '../templates/country-card.hbs';
 import countriesListTpl from '../templates/countries-list.hbs';
@@ -23,7 +23,6 @@ function onCountryInput(e) {
   countriesApiService.searchQuery = e.target.value;
 
   if (countriesApiService.searchQuery.length === 0) {
-    console.log('ffffff');
     clearMarkup();
     return;
   }
